@@ -82,6 +82,7 @@ const loadNfts = async () => {
     const contract = getEtheriumContract()
     const nfts = await contract.getAllNFTs()
 
+    // console.log(structuredNfts(nfts))
     setGlobalState('nfts', structuredNfts(nfts))
   } catch (error) {
     reportError(error)
