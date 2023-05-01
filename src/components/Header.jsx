@@ -1,6 +1,11 @@
 import ethlogo from "../assets/ethlogo.png"
+import { connectWallet } from '../Rodgers'
+import { truncate, useGlobalState } from '../store'
+
 
 const Header = () => {
+  const [connectedAccount] = useGlobalState('connectedAccount')
+
   return (
     <nav className="w-4/5 flex justify-between md:justify-center items-center py-4 mx-auto"
     >
@@ -16,8 +21,24 @@ const Header = () => {
         <li className="mx-4 cursor-pointer">Community</li>
       </ul>
 
-      <button className="shadow-xl shadow-black text-white bg-[#e32970] hover:bg-[#bd255f] 
-      md:text-xs p-2 rounded-full cursor-pointer">Connect Wallet</button>
+      {connectedAccount ? (
+        <button
+          className="shadow-xl shadow-black text-white 
+        bg-[#e32970] hover:bg-[#bd255f] md:text-xs p-2
+        rounded-full cursor-pointer"
+        >
+          {truncate(connectedAccount, 4, 4, 11)}
+        </button>
+      ) : (
+        <button
+          className="shadow-xl shadow-black text-white 
+        bg-[#e32970] hover:bg-[#bd255f] md:text-xs p-2
+        rounded-full cursor-pointer"
+          onClick={connectWallet}
+        >
+          Connect Wallet
+        </button>
+      )}
     </nav>
   )
 }
