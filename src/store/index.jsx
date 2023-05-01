@@ -25,7 +25,7 @@ const setAlert = (msg, color = 'green') => {
   setTimeout(() => {
     setGlobalState('alert', { show: false, msg: '', color })
     setGlobalState('loading', false)
-  }, 8000)
+  }, 5000)
 }
 
 const setLoadingMsg = (msg) => {
