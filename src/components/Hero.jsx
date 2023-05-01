@@ -4,8 +4,24 @@ import facebook from '../assets/facebook_icon.png'
 import twitter from '../assets/twitter_icon.png'
 import linkedIn from '../assets/linkedIn_icon.png'
 import medium from '../assets/medium_icon.png'
+import { setAlert, setGlobalState, useGlobalState } from '../store'
+import { payToMint } from '../Rodgers'
 
 const Hero = () => {
+
+  const [nfts] = useGlobalState('nfts')
+
+  const onMintNFT = async () => {
+    setGlobalState('loading', {
+      show: true,
+      msg: 'Minting new NFT to your account',
+    })
+
+    await payToMint()
+      .then(() => setAlert('Minting Successful...', 'green'))
+      .catch(() => setGlobalState('loading', { show: false, msg: '' }))
+  }
+
   return (
     <div className="bg-[url('https://cdn.pixabay.com/photo/2022/03/01/02/51/galaxy-7040416_960_720.png')]
       bg-no-repeat bg-cover"
@@ -19,7 +35,7 @@ const Hero = () => {
         <p className='text-white font-semibold text-sm mt-3'>Mint and Collect the hottest NFTs around.</p>
 
         <button className='shadow-xl shadow-black text-white bg-[#e32970 hover:bg-[#bd255f]
-        p-2 rounded-full cursor-pointer my-4'>Mint Now</button>
+        p-2 rounded-full cursor-pointer my-4' onClick={onMintNFT}>Mint Now</button>
 
         <a className="flex justify-center items-center space-x-2 bg-[#000000ad] rounded-full my-4 pr-3 cursor-pointer"
         href='https://rodgersic.github.io' target="_blank">
@@ -73,7 +89,7 @@ const Hero = () => {
 
           <div className="shadow-xl shadow-black flex justify-center items-center w-10 h-10 rounded-full bg-white 
           cursor-pointer p-3 ml-4 text-black hover:bg-[#bd255f] hover:text-white transition-all duration-75 delay-100">
-            <span className="text-sm font-bold">99</span>
+            <span className="text-sm font-bold">{nfts.length}/99</span>
           </div>
     </div>
   </div>
